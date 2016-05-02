@@ -1,0 +1,11 @@
+{
+  "name": "transpile-c-to-js",
+  "version": "0.0.1",
+  "description": "",
+  "main": "transpile-c.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "deathcap <deathcap@gmx.co.uk>",
+  "license": "MIT"
+}
