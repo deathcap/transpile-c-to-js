@@ -351,8 +351,8 @@ class JavaScriptGenerator(object):
 
         if typ == c_ast.TypeDecl:
             s = ''
-            if n.quals: s += ' '.join(n.quals) + ' '
-            s += self.visit(n.type)
+            #if n.quals: s += ' '.join(n.quals) + ' '
+            #s += self.visit(n.type) # JS: no types TODO: local variables need let/const
 
             nstr = n.declname if n.declname else ''
             # Resolve modifiers.
@@ -368,12 +368,16 @@ class JavaScriptGenerator(object):
                     if (i != 0 and isinstance(modifiers[i - 1], c_ast.PtrDecl)):
                         nstr = '(' + nstr + ')'
                     nstr += '(' + self.visit(modifier.args) + ')'
+                    nstr = 'function ' + nstr # JS: function
                 elif isinstance(modifier, c_ast.PtrDecl):
-                    if modifier.quals:
-                        nstr = '* %s %s' % (' '.join(modifier.quals), nstr)
-                    else:
-                        nstr = '*' + nstr
-            if nstr: s += ' ' + nstr
+                    pass
+                    # JS: no pointers
+                    #if modifier.quals:
+                    #    nstr = '* %s %s' % (' '.join(modifier.quals), nstr)
+                    #else:
+                    #    nstr = '*' + nstr
+            #if nstr: s += ' ' + nstr
+            if nstr: s += nstr # JS: remove whitespace
             return s
         elif typ == c_ast.Decl:
             return self._generate_decl(n.type)
