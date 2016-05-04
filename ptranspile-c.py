@@ -3,8 +3,9 @@ import sys
 sys.path.extend(['.', 'pycparser'])
 
 # sudo easy_install pycparser
-from pycparser import parse_file, c_generator
+from pycparser import parse_file
 
+import c_generator
 
 def translate(filename):
     ast = parse_file(filename,
