@@ -294,16 +294,28 @@ class JavaScriptGenerator(object):
         """ Generates code for structs and unions. name should be either
             'struct' or union.
         """
-        s = name + ' ' + (n.name or '')
+        # JS: struct/union to class
+        s = 'class ' + n.name + ' {\n'
+        self.indent_level += 1
+        s += self._make_indent()
+        s += 'constuctor() {'
+
+        #s = name + ' ' + (n.name or '')
         if n.decls:
             s += '\n'
-            s += self._make_indent()
+            #s += self._make_indent()
             self.indent_level += 2
-            s += '{\n'
+            #s += '{\n'
             for decl in n.decls:
+                # TODO: change let foo; to this.foo = ???
                 s += self._generate_stmt(decl)
             self.indent_level -= 2
-            s += self._make_indent() + '}'
+        s += self._make_indent() + '}'
+
+        # JS: close constructor
+        self.indent_level -= 1
+        s += '\n'
+        s += self._make_indent() + '}'
         return s
 
     def _generate_stmt(self, n, add_indent=False):
