@@ -291,7 +291,8 @@ class JavaScriptGenerator(object):
         return n.name + ':\n' + self._generate_stmt(n.stmt)
 
     def visit_Goto(self, n):
-        return 'goto ' + n.name + ';'
+        #return 'goto ' + n.name + ';'
+        return '// FIXME: goto ' + n.name + ';'
 
     def visit_EllipsisParam(self, n):
         return '...'
