@@ -440,7 +440,7 @@ class JavaScriptGenerator(object):
                     s = 'let ' + s
 
             if nstr: s += nstr # JS: remove whitespace
-            if len(nstr) == 0: s = 'void' # JS: if this is _only_ for a type, but JS doesn't list types - omit it (casts, prototype args, etc.)
+            if len(nstr) == 0: s = self.visit(n.type) # JS: if this is _only_ for a type, then emit it - for sizeof() only!
             return s
         elif typ == c_ast.Decl:
             return self._generate_decl(n.type)
