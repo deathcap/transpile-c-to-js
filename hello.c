@@ -1,5 +1,5 @@
-int n = 1;
-char *s = "foo";
+
+#include <stdio.h>
 
 int main(int argc, char **argv) {
     printf("Hello, world!\n");

@@ -24,6 +24,7 @@ def translate(filename):
             "-D_Noreturn=",
 
             "-U__BLOCKS__", # no (^) syntax: include/stdlib.h: int  atexit_b(void (^)(void));
+            "-U__nonnull", # avoid __nonnull redefinition
 
             "-nostdinc",
             "-Iinclude", # copy from /usr/include
