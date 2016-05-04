@@ -8,5 +8,7 @@ int main(int argc, char **argv) {
 
     printf("Hello, world!\n");
 
+    if (a == 2) exit(EXIT_FAILURE);
+
     return 0;
 }

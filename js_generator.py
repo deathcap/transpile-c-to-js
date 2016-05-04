@@ -86,7 +86,16 @@ class JavaScriptGenerator(object):
                             lambda d: not self._is_simple_node(d))
         rval_str = self._parenthesize_if(n.right,
                             lambda d: not self._is_simple_node(d))
-        return '%s %s %s' % (lval_str, n.op, rval_str)
+
+        # JS: use strict comparison operators
+        if n.op == '==':
+            op = '==='
+        elif n.op == '!=':
+            op = '!=='
+        else:
+            op = n.op
+
+        return '%s %s %s' % (lval_str, op, rval_str)
 
     def visit_Assignment(self, n):
         rval_str = self._parenthesize_if(
