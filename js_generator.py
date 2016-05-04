@@ -70,6 +70,12 @@ class JavaScriptGenerator(object):
             # Always parenthesize the argument of sizeof since it can be
             # a name.
             return 'sizeof(%s)' % self.visit(n.expr)
+        # JS: *pointer dereference TODO
+        elif n.op == '*':
+            return '%s' % (operand,)
+        # JS: &address of TODO
+        elif n.op == '&':
+            return '%s' % (operand,)
         else:
             return '%s%s' % (n.op, operand)
 
