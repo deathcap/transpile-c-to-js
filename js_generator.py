@@ -351,10 +351,11 @@ class JavaScriptGenerator(object):
 
         if typ == c_ast.TypeDecl:
             s = ''
-            #if n.quals: s += ' '.join(n.quals) + ' '
-            #s += self.visit(n.type) # JS: no types TODO: local variables need let/const
+            #if n.quals: s += ' '.join(n.quals) + ' ' # JS: no const/extern/etc. qualifiers
+            #s += self.visit(n.type) # JS: no types
 
             nstr = n.declname if n.declname else ''
+            isFunction = False
             # Resolve modifiers.
             # Wrap in parens to distinguish pointer to array and pointer to
             # function syntax.
@@ -367,8 +368,9 @@ class JavaScriptGenerator(object):
                 elif isinstance(modifier, c_ast.FuncDecl):
                     if (i != 0 and isinstance(modifiers[i - 1], c_ast.PtrDecl)):
                         nstr = '(' + nstr + ')'
-                    nstr += '(' + self.visit(modifier.args) + ')'
+                    nstr += '(' + self.visit(modifier.args) + ')' # TODO: no let/const on param list!
                     nstr = 'function ' + nstr # JS: function
+                    isFunction = True
                 elif isinstance(modifier, c_ast.PtrDecl):
                     pass
                     # JS: no pointers
@@ -377,6 +379,15 @@ class JavaScriptGenerator(object):
                     #else:
                     #    nstr = '*' + nstr
             #if nstr: s += ' ' + nstr
+            # JS: declare local variables
+            if not isFunction:
+                if 'const' in n.quals:
+                    # if has a 'const' qualifier try to declare with 'const'
+                    s = 'const ' + s;
+                else:
+                    # otherwise, ES6 declares new variables with 'let'
+                    s = 'let ' + s;
+
             if nstr: s += nstr # JS: remove whitespace
             return s
         elif typ == c_ast.Decl:
