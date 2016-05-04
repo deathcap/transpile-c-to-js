@@ -196,10 +196,16 @@ class JavaScriptGenerator(object):
             elif isinstance(ext, c_ast.Pragma):
                 s += self.visit(ext) + '\n'
             else:
+                # JS: skip top-level code, mainly useless - only emit function code TODO
+                continue
                 # JS: only add non-empty lines
                 line = self.visit(ext)
-                if len(line) != 0:
-                    s += self.visit(ext) + ';\n'
+                if len(line) == 0:
+                    continue
+                # JS: try to avoid emitting function prototypes TODO: how to detect reliably?
+                if line.startswith('function') and '\n' not in line:
+                    continue
+                s += self.visit(ext) + ';\n'
         return s
 
     def visit_Compound(self, n):
