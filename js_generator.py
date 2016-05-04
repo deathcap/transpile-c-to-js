@@ -116,8 +116,8 @@ class JavaScriptGenerator(object):
 
     def visit_Typedef(self, n):
         s = ''
-        if n.storage: s += ' '.join(n.storage) + ' '
-        s += self._generate_type(n.type)
+        #if n.storage: s += ' '.join(n.storage) + ' '
+        #s += self._generate_type(n.type)
         return s
 
     def visit_Cast(self, n):
@@ -168,7 +168,8 @@ class JavaScriptGenerator(object):
             elif isinstance(ext, c_ast.Pragma):
                 s += self.visit(ext) + '\n'
             else:
-                s += self.visit(ext) + ';\n'
+                #s += self.visit(ext) + ';\n' # JS: something about typedefs we don't care about TODO: is this right? what is it?
+                s += self.visit(ext)
         return s
 
     def visit_Compound(self, n):
