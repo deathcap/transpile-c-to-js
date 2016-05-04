@@ -368,7 +368,13 @@ class JavaScriptGenerator(object):
                 elif isinstance(modifier, c_ast.FuncDecl):
                     if (i != 0 and isinstance(modifiers[i - 1], c_ast.PtrDecl)):
                         nstr = '(' + nstr + ')'
-                    nstr += '(' + self.visit(modifier.args) + ')' # TODO: no let/const on param list!
+
+                    # JS: parameter declaration variables do not have let/const TODO: fix hack, detect parameter context
+                    paramDecls = self.visit(modifier.args)
+                    paramDecls = paramDecls.replace('let ', '')
+                    paramDecls = paramDecls.replace('const ', '')
+
+                    nstr += '(' + paramDecls + ')'
                     nstr = 'function ' + nstr # JS: function
                     isFunction = True
                 elif isinstance(modifier, c_ast.PtrDecl):
