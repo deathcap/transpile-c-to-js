@@ -5,7 +5,7 @@ sys.path.extend(['.', 'pycparser'])
 # sudo easy_install pycparser
 from pycparser import parse_file
 
-import c_generator
+import js_generator
 
 def translate(filename):
     ast = parse_file(filename,
@@ -31,7 +31,7 @@ def translate(filename):
             "-Iinclude", # copy from /usr/include
             #"-Ipycparser/utils/fake_libc_include",
             ])
-    generator = c_generator.CGenerator()
+    generator = js_generator.JavaScriptGenerator()
     print(generator.visit(ast))
 
 translate(sys.argv[1])
