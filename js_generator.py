@@ -91,7 +91,9 @@ class JavaScriptGenerator(object):
 
     def _visit_expr(self, n):
         if isinstance(n, c_ast.InitList):
-            return '{' + self.visit(n) + '}'
+            # JS: initializer lists, lets go with array syntax for now TODO: object literal syntax?
+            return '[' + self.visit(n) + ']'
+            #return '{' + self.visit(n) + '}'
         elif isinstance(n, c_ast.ExprList):
             return '(' + self.visit(n) + ')'
         else:
@@ -295,6 +297,7 @@ class JavaScriptGenerator(object):
             'struct' or union.
         """
         # JS: struct/union to class
+        if n.name is None: return '' # anonymous class?
         s = 'class ' + n.name + ' {\n'
         self.indent_level += 1
         s += self._make_indent()
@@ -409,6 +412,7 @@ class JavaScriptGenerator(object):
                     # otherwise, ES6 declares new variables with 'let'
                     s = 'let ' + s
 
+            if len(nstr) == 0: nstr = 'void' # JS: if type was given but removed TODO: strip function prototypes completely
             if nstr: s += nstr # JS: remove whitespace
             return s
         elif typ == c_ast.Decl:
@@ -418,6 +422,7 @@ class JavaScriptGenerator(object):
         elif typ == c_ast.IdentifierType:
             return ' '.join(n.names) + ' '
         elif typ in (c_ast.ArrayDecl, c_ast.PtrDecl, c_ast.FuncDecl):
+        #elif typ in (c_ast.ArrayDecl, c_ast.PtrDecl):
             return self._generate_type(n.type, modifiers + [n])
         else:
             return self.visit(n)
