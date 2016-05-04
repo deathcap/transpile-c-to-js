@@ -337,7 +337,7 @@ class JavaScriptGenerator(object):
         """
         s = ''
         if n.funcspec: s = ' '.join(n.funcspec) + ' '
-        if n.storage: s += ' '.join(n.storage) + ' '
+        #if n.storage: s += ' '.join(n.storage) + ' ' # JS: no storage qualifiers (const, ...)
         s += self._generate_type(n.type)
         return s
 

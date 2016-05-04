@@ -28,8 +28,8 @@ def translate(filename):
             "-U__nonnull", # avoid __nonnull redefinition
 
             "-nostdinc",
-            #"-Iinclude", # copy from /usr/include
             "-Ipycparser/utils/fake_libc_include",
+            "-Iinclude", # copy from /usr/include
             ])
     generator = js_generator.JavaScriptGenerator()
     print(generator.visit(ast))
