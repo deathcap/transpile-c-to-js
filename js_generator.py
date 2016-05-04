@@ -389,10 +389,10 @@ class JavaScriptGenerator(object):
             if not isFunction:
                 if 'const' in n.quals:
                     # if has a 'const' qualifier try to declare with 'const'
-                    s = 'const ' + s;
+                    s = 'const ' + s
                 else:
                     # otherwise, ES6 declares new variables with 'let'
-                    s = 'let ' + s;
+                    s = 'let ' + s
 
             if nstr: s += nstr # JS: remove whitespace
             return s
