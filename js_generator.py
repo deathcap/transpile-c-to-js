@@ -365,7 +365,7 @@ class JavaScriptGenerator(object):
                 if isinstance(modifier, c_ast.ArrayDecl):
                     if (i != 0 and isinstance(modifiers[i - 1], c_ast.PtrDecl)):
                         nstr = '(' + nstr + ')'
-                    nstr += '[' + self.visit(modifier.dim) + ']'
+                    #nstr += '[' + self.visit(modifier.dim) + ']' # JS: no array [] dimensions
                 elif isinstance(modifier, c_ast.FuncDecl):
                     if (i != 0 and isinstance(modifiers[i - 1], c_ast.PtrDecl)):
                         nstr = '(' + nstr + ')'
