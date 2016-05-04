@@ -54,7 +54,9 @@ class JavaScriptGenerator(object):
 
     def visit_StructRef(self, n):
         sref = self._parenthesize_unless_simple(n.name)
-        return sref + n.type + self.visit(n.field)
+        # JS: structure->member dereference to structure.member
+        #return sref + n.type + self.visit(n.field)
+        return sref + '.' + self.visit(n.field)
 
     def visit_FuncCall(self, n):
         fref = self._parenthesize_unless_simple(n.name)
