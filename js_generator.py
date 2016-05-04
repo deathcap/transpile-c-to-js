@@ -131,9 +131,10 @@ class JavaScriptGenerator(object):
         return s
 
     def visit_Cast(self, n):
-        return '' # JS: no casts
+        # JS: no type information in casts, return expression as-is
         #s = '(' + self._generate_type(n.to_type) + ')'
         #return s + ' ' + self._parenthesize_unless_simple(n.expr)
+        return self._parenthesize_unless_simple(n.expr)
 
     def visit_ExprList(self, n):
         visited_subexprs = []
