@@ -301,7 +301,9 @@ class JavaScriptGenerator(object):
         return '// FIXME: goto ' + n.name + ';'
 
     def visit_EllipsisParam(self, n):
-        return '...'
+        # JS: spread parameters, must be named
+        return '...args'
+        #return '...'
 
     def visit_Struct(self, n):
         return self._generate_struct_union(n, 'struct')
@@ -386,7 +388,7 @@ class JavaScriptGenerator(object):
         """ Generation from a Decl node.
         """
         s = ''
-        if n.funcspec: s = ' '.join(n.funcspec) + ' '
+        #if n.funcspec: s = ' '.join(n.funcspec) + ' ' # JS: no function specifier (inline, ...)
         #if n.storage: s += ' '.join(n.storage) + ' ' # JS: no storage qualifiers (const, ...)
         s += self._generate_type(n.type)
         return s
