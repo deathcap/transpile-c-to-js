@@ -101,7 +101,14 @@ class JavaScriptGenerator(object):
         rval_str = self._parenthesize_if(
                             n.rvalue,
                             lambda n: isinstance(n, c_ast.Assignment))
-        return '%s %s %s' % (self.visit(n.lvalue), n.op, rval_str)
+        lval_str = self.visit(n.lvalue)
+
+        # JS: can't translate the *p++ = ... pattern (assignable pointers)
+        if '++' in lval_str or '--' in lval_str:
+            return '/* FIXME: %s %s %s */0' % (lval_str, n.op, rval_str)
+
+        #return '%s %s %s' % (self.visit(n.lvalue), n.op, rval_str)
+        return '%s %s %s' % (lval_str, n.op, rval_str)
 
     def visit_IdentifierType(self, n):
         return ' '.join(n.names)
