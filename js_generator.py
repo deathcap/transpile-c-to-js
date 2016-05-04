@@ -123,8 +123,9 @@ class JavaScriptGenerator(object):
         return s
 
     def visit_Cast(self, n):
-        s = '(' + self._generate_type(n.to_type) + ')'
-        return s + ' ' + self._parenthesize_unless_simple(n.expr)
+        return '' # JS: no casts
+        #s = '(' + self._generate_type(n.to_type) + ')'
+        #return s + ' ' + self._parenthesize_unless_simple(n.expr)
 
     def visit_ExprList(self, n):
         visited_subexprs = []
@@ -412,8 +413,8 @@ class JavaScriptGenerator(object):
                     # otherwise, ES6 declares new variables with 'let'
                     s = 'let ' + s
 
-            if len(nstr) == 0: nstr = 'void' # JS: if type was given but removed TODO: strip function prototypes completely
             if nstr: s += nstr # JS: remove whitespace
+            if len(nstr) == 0: s = '' # JS: if this is _only_ for a type, but JS doesn't list types - omit it (casts, prototype args, etc.)
             return s
         elif typ == c_ast.Decl:
             return self._generate_decl(n.type)
