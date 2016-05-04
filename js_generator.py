@@ -440,12 +440,12 @@ class JavaScriptGenerator(object):
             #if nstr: s += ' ' + nstr
             # JS: declare local variables
             if not isFunction:
-                if 'const' in n.quals:
-                    # if has a 'const' qualifier try to declare with 'const'
-                    s = 'const ' + s
-                else:
-                    # otherwise, ES6 declares new variables with 'let'
-                    s = 'let ' + s
+                # TODO: emit const when can, but see https://github.com/deathcap/transpile-c-to-js/issues/2
+                #if False and 'const' in n.quals: # TODO: make this smarter, 
+                #    # if has a 'const' qualifier try to declare with 'const'
+                #    s = 'const ' + s
+                # otherwise, ES6 declares new variables with 'let'
+                s = 'let ' + s
 
             if nstr: s += nstr # JS: remove whitespace
             if len(nstr) == 0: s = self.visit(n.type) # JS: if this is _only_ for a type, then emit it - for sizeof() only!
