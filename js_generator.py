@@ -168,8 +168,10 @@ class JavaScriptGenerator(object):
             elif isinstance(ext, c_ast.Pragma):
                 s += self.visit(ext) + '\n'
             else:
-                #s += self.visit(ext) + ';\n' # JS: something about typedefs we don't care about TODO: is this right? what is it?
-                s += self.visit(ext)
+                # JS: only add non-empty lines
+                line = self.visit(ext)
+                if len(line) != 0:
+                    s += self.visit(ext) + ';\n'
         return s
 
     def visit_Compound(self, n):
