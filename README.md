@@ -46,6 +46,12 @@ function main(argc, argv)
 }
 ```
 
+A more complex example: 
+[ls.js](https://gist.github.com/deathcap/77bbe28924948e86529468f43b837ba6).
+(original source from [FreeBSD /head/bin/ls/ls.c](https://svnweb.freebsd.org/base/head/bin/ls/ls.c?revision=285734&view=markup))
+Not all complex C programs will transpile successfully
+(patches welcome).
+
 ## License
 
 MIT
