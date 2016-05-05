@@ -37,6 +37,9 @@ class JavaScriptGenerator(object):
             return ''.join(self.visit(c) for c_name, c in node.children())
 
     def visit_Constant(self, n):
+        # JS: single-quoted strings by convention
+        if n.value.startswith('"') and n.value.endswith('"'):
+            return "'%s'" % (n.value[1:-1].replace("'", "\\'"))
         return n.value
 
     def visit_ID(self, n):
@@ -141,6 +144,7 @@ class JavaScriptGenerator(object):
         return s
 
     def visit_Typedef(self, n):
+        # JS: no typedef
         s = ''
         #if n.storage: s += ' '.join(n.storage) + ' '
         #s += self._generate_type(n.type)
